@@ -3,10 +3,11 @@
 module CannLabsQualifiedAccess
   class Engine < ::Rails::Engine
     engine_name CannLabsQualifiedAccess::PLUGIN_NAME
+    config.autoload_paths << File.join(config.root, "lib")
 
-    initializer "cannlabs_qualified_access.scheduled_jobs", before: :setup_main_autoloader do |app|
-      scheduled_jobs = config.root.join("app/jobs/scheduled")
-      Rails.autoloaders.main.eager_load_dir(scheduled_jobs) if scheduled_jobs.directory?
+    scheduled_job_dir = "#{config.root}/app/jobs/scheduled"
+    config.to_prepare do
+      Rails.autoloaders.main.eager_load_dir(scheduled_job_dir) if Dir.exist?(scheduled_job_dir)
     end
   end
 end
