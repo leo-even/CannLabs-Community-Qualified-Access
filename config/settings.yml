@@ -1,0 +1,4 @@
+cannlabs_qualified_access:
+  cannlabs_qualified_access_enabled:
+    default: false
+    client: true
